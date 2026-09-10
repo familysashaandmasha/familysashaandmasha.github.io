@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Маша и Саша · 11 октября 2026</title>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Маша и Саша · 11 октября 2026">
+<meta property="og:description" content="Венчание в храме Анны Кашинской, вечер на Восстания, 35.">
+<meta property="og:image" content="https://familysashaandmasha.github.io/og.jpg">
+<meta property="og:url" content="https://familysashaandmasha.github.io/">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta name="theme-color" id="themeColor" content="#FFFFFF">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* Пересчитывается на прокрутке — см. paint() */
+  --bg:#FFFFFF;
+  --fg:#141A20;
+  --fg-rgb:20,26,32;
+  --soft:#5C6874;
+  --accent:#2F6FD0;
+  --on-accent:#FFFFFF;
+  --hair:rgba(20,26,32,.18);
+
+  --display:"Unbounded", "Trebuchet MS", sans-serif;
+  --body:"Manrope", -apple-system, "Segoe UI", sans-serif;
+
+  --pad:clamp(20px, 6vw, 56px);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; overflow-x:hidden;
+  background:var(--bg); color:var(--fg);
+  font-family:var(--body);
+  font-size:clamp(15.5px, 4.2vw, 18px); line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+.glow{
+  position:fixed; z-index:0; pointer-events:none;
+  left:50%; top:0; width:150vw; height:150vw;
+  transform:translate(-50%,-46%);
+  background:radial-gradient(circle, rgba(126,178,232,.32), transparent 62%);
+  will-change:transform;
+}
+.page{position:relative; z-index:1; scroll-snap-type:y proximity}
+
+
+.scr{
+  min-height:100svh;
+  padding:calc(env(safe-area-inset-top) + 9svh) var(--pad) 9svh;
+  display:flex; flex-direction:column; justify-content:center;
+  scroll-snap-align:start;
+}
+/* Последний момент дня короче экрана: иначе за ним видна одна пустота
+   и кажется, что страница кончилась. */
+.scr--last{min-height:52svh; justify-content:flex-end; padding-bottom:clamp(24px,6vw,40px)}
+
+/* ═══ Обложка ═══ */
+.cover{
+  min-height:100svh; height:auto; display:block;
+  padding-top:calc(env(safe-area-inset-top) + 6svh); padding-bottom:7svh;
+}
+/* Имена заезжают на растворенный низ фотографии — снимок и текст
+   становятся одним объектом, а не двумя соседями. */
+.cover__text{position:relative; z-index:1; margin-top:clamp(-104px,-19vw,-58px)}
+
+.shot{
+  position:relative; margin:0; width:100%;
+  aspect-ratio:1/1; border-radius:22px 22px 0 0; overflow:hidden;
+}
+.shot img{
+  display:block; width:100%; height:100%;
+  object-fit:cover; object-position:52% 12%;
+}
+/* Низ снимка уходит в цвет страницы — граница исчезает, и имена
+   ложатся уже на фон, а не на фотографию: читается при любом кадре. */
+.shot::after{
+  content:""; position:absolute; left:0; right:0; bottom:-1px; height:58%;
+  background:linear-gradient(to bottom,
+    rgba(255,255,255,0) 0%, rgba(255,255,255,.35) 34%, var(--bg) 74%);
+}
+.who{
+  font-size:12.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--soft); margin:0 0 clamp(16px,4.5vw,26px); min-height:1.3em;
+}
+.names{
+  font-family:var(--display); font-weight:200;
+  font-size:clamp(38px, 12.4vw, 82px); line-height:.94;
+  letter-spacing:-.035em; margin:0;
+}
+.names{margin:0; display:block}
+.names i{font-style:normal; font-weight:300; font-size:.4em; letter-spacing:0; color:var(--soft); display:block; margin:.16em 0}
+.big-date{
+  font-family:var(--display); font-weight:300;
+  font-size:clamp(19px, 5.6vw, 30px); letter-spacing:-.015em;
+  margin:clamp(12px,3.5vw,18px) 0 0; line-height:1.15;
+}
+.sub{flex:none; margin:6px 0 0; color:var(--soft); font-size:.98em}
+
+/* ═══ Момент дня ═══ */
+.time{
+  font-family:var(--display); font-weight:200;
+  font-size:clamp(64px, 26vw, 190px); line-height:.82;
+  letter-spacing:-.055em; margin:0 0 -.06em -.045em;
+}
+.what{
+  font-family:var(--display); font-weight:300;
+  font-size:clamp(27px, 8.6vw, 54px); line-height:1.06;
+  letter-spacing:-.025em; margin:0 0 20px;
+}
+.addr{margin:0 0 4px; font-size:1.02em}
+.addr b{display:block; font-weight:700; margin-bottom:2px}
+.addr span{display:block; color:var(--soft)}
+.body{max-width:30em; margin:0 0 14px}
+.body:last-child{margin-bottom:0}
+
+a{
+  color:var(--fg); text-decoration:underline;
+  text-underline-offset:4px; text-decoration-thickness:1.5px;
+  text-decoration-color:rgba(var(--fg-rgb), .38);
+}
+.body a, .sec a{display:inline-block; padding:11px 0}
+.maplink{
+  display:inline-block; margin-top:4px; padding:12px 0;
+  text-decoration:none; border-bottom:1.5px solid rgba(var(--fg-rgb), .35);
+  font-size:.94em; font-weight:500;
+}
+.maplink::after{content:" →"; color:var(--soft)}
+:focus-visible{outline:2.5px solid var(--accent); outline-offset:4px; border-radius:3px}
+
+/* Детали */
+.more{margin:20px 0 0; max-width:32em}
+.more summary{
+  cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:9px;
+  font-size:12.5px; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--soft); padding:14px 0; min-height:44px;
+}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{
+  content:""; width:8px; height:8px; margin-top:-3px;
+  border-right:2px solid currentColor; border-bottom:2px solid currentColor;
+  transform:rotate(45deg); transition:transform .2s;
+}
+.more[open] summary::after{transform:rotate(-135deg); margin-top:2px}
+.more dl{margin:2px 0 0; padding:0 0 0 15px; border-left:1.5px solid var(--hair)}
+.more dt{
+  font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--soft); margin:16px 0 2px;
+}
+.more dt:first-child{margin-top:0}
+.more dd{margin:0; font-size:.95em; line-height:1.55}
+
+.bus{margin:22px 0 0; padding:18px 0 0; max-width:32em; border-top:1.5px solid var(--hair)}
+.bus__h{font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--soft); margin:0 0 8px}
+
+.swatches{display:flex; gap:10px; margin:24px 0 0; flex-wrap:wrap}
+.sw{width:46px; height:46px; border-radius:50%; box-shadow:inset 0 0 0 1.5px var(--hair)}
+
+/* ═══ Обычный поток ═══ */
+.flow{padding:clamp(46px,13vw,92px) var(--pad) 0}
+.sec{margin:0 0 clamp(52px,14vw,90px); max-width:34em}
+.sec h2{
+  font-family:var(--display); font-weight:300;
+  font-size:clamp(24px,7.4vw,40px); line-height:1.12; letter-spacing:-.025em;
+  margin:0 0 16px;
+}
+
+/* ═══ Анкета ═══ */
+.field{margin:0 0 24px}
+.lab{
+  display:block; font-size:11.5px; font-weight:700; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--soft); margin:0 0 10px;
+}
+.fld{
+  width:100%; background:rgba(var(--fg-rgb), .06); color:var(--fg);
+  border:1.5px solid rgba(var(--fg-rgb), .24); border-radius:12px;
+  padding:15px 16px; font-family:var(--body); font-size:16px; font-weight:500;
+}
+.fld::placeholder{color:rgba(var(--fg-rgb), .58)}
+
+.opts{display:grid; gap:9px}
+.opts--row{grid-auto-flow:column; grid-auto-columns:1fr}
+.opt{position:relative}
+.opt input{position:absolute; inset:0; opacity:0; width:100%; height:100%; margin:0; cursor:pointer}
+.opt span{
+  display:block; text-align:center; padding:16px 12px; border-radius:12px;
+  border:1.5px solid rgba(var(--fg-rgb), .24); background:rgba(var(--fg-rgb), .06);
+  font-size:16px; font-weight:500; color:var(--fg); transition:.16s;
+}
+.opt input:checked + span{background:var(--accent); border-color:var(--accent); color:var(--on-accent); font-weight:700}
+.opt input:focus-visible + span{outline:2.5px solid var(--accent); outline-offset:3px}
+
+.count{display:flex; gap:9px; flex-wrap:wrap}
+.count .opt{flex:1; min-width:62px}
+
+.go{
+  width:100%; margin:8px 0 0; padding:18px; cursor:pointer;
+  background:var(--accent); color:var(--on-accent); border:0; border-radius:12px;
+  font-family:var(--body); font-weight:700; font-size:16px;
+}
+.go:disabled{opacity:.5; cursor:default}
+.msg{margin:14px 0 0; font-size:.95em; font-weight:500; min-height:1.3em}
+.msg--err{
+  color:#9E2B22; font-weight:700;
+  background:rgba(214,69,58,.10); border:1.5px solid rgba(214,69,58,.35);
+  border-radius:12px; padding:13px 15px;
+}
+.msg--err a{color:#9E2B22}
+
+/* Беседа */
+.chat{
+  margin:26px 0 0; padding:22px 0 0; max-width:34em;
+  border-top:1.5px solid var(--hair);
+}
+.chat .chat__b{
+  display:block; width:fit-content; margin:18px auto 0; padding:15px 26px;
+  border:1.5px solid rgba(var(--fg-rgb), .35); border-radius:12px;
+  text-decoration:none; font-weight:700; font-size:15.5px; color:var(--fg);
+}
+
+.foot{
+  padding:34px var(--pad) calc(env(safe-area-inset-bottom) + 54px);
+  text-align:center; color:var(--soft);
+  font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+}
+
+.up{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s cubic-bezier(.16,.8,.3,1)}
+.up.in{opacity:1; transform:none}
+.up.d1{transition-delay:.07s}
+.up.d2{transition-delay:.14s}
+.hide{display:none !important}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .page{scroll-snap-type:none}
+  .up{opacity:1 !important; transform:none !important; transition:none}
+  .glow{display:none}
+}
+@media (min-width:760px){
+  .scr, .flow{padding-left:max(var(--pad), calc(50vw - 330px)); padding-right:max(var(--pad), calc(50vw - 330px))}
+}
+</style>
+</head>
+<body>
+
+<div class="glow" id="glow" aria-hidden="true"></div>
+
+<div class="page">
+
+  <!-- ══ Обложка ══ -->
+  <section class="scr cover">
+    <p class="who" id="who">&nbsp;</p>
+
+    <figure class="shot up">
+      <img src="photo.jpg" width="1000" height="1333" alt="Маша и Саша" fetchpriority="high" decoding="async">
+    </figure>
+
+    <div class="cover__text">
+      <h1 class="names up d1">Маша<i>и</i>Саша</h1>
+      <p class="big-date up d2">11 октября 2026</p>
+      <p class="sub up d2">Воскресенье · Санкт-Петербург</p>
+    </div>
+  </section>
+
+  <!-- ══ 12:00 ══ -->
+  <section class="scr">
+    <p class="time up">12:00</p>
+    <h2 class="what up d1">Венчание</h2>
+    <p class="addr up d1">
+      <b>Храм Анны Кашинской</b>
+      <span>Большой Сампсониевский проспект, 53</span>
+    </p>
+    <p class="up d1"><a class="maplink" href="https://yandex.ru/maps/-/CThzR2Jz" target="_blank" rel="noopener">Открыть карту</a></p>
+
+    <details class="more up d2">
+      <summary>Что важно знать</summary>
+      <dl>
+        <dt>Когда приходить</dt>
+        <dd>Лучше немного пораньше — так спокойнее и вам, и нам.</dd>
+        <dt>Сколько идет</dt>
+        <dd>Около часа.</dd>
+        <dt>Одежда</dt>
+        <dd>В храме женщины покрывают голову — подойдет платок или легкий шарф, и плечи лучше закрыть. Юбка или платье ниже колена. Мужчинам — брюки.</dd>
+      </dl>
+    </details>
+  </section>
+
+  <!-- ══ 13:00 ══ -->
+  <section class="scr">
+    <p class="time up">13:00</p>
+    <h2 class="what up d1">Два часа наши</h2>
+    <p class="body up d1">До вечера есть время. Можно разъехаться по своим делам и встретиться уже на Восстания — а можно поехать с нами смотреть на город.</p>
+
+    <div class="bus up d2">
+      <p class="bus__h">Автобус</p>
+      <p class="body">Мы берем автобус и катаемся по городу — без программы, просто вместе. Он же довозит до места вечера, так что добираться потом не надо.</p>
+      <p class="body" style="color:var(--soft)">Отметьте в анкете, если хотите поехать.</p>
+    </div>
+  </section>
+
+  <!-- ══ 15:00 ══ -->
+  <section class="scr">
+    <p class="time up">15:00</p>
+    <h2 class="what up d1">Вечер</h2>
+    <p class="addr up d1">
+      <b>«Амулет», Классический зал</b>
+      <span>Улица Восстания, 35 — вход на углу дома</span>
+    </p>
+    <p class="up d1"><a class="maplink" href="https://yandex.ru/maps/-/CThznFn4" target="_blank" rel="noopener">Открыть карту</a></p>
+    <p class="body up d2">Ужин, ведущий и диджей. Столы небольшие, так что за вечер получится поговорить со всеми.</p>
+  </section>
+
+  <!-- ══ Что надеть ══ -->
+  <section class="scr">
+    <h2 class="what up">Что надеть</h2>
+    <p class="body up d1">Спокойные светлые цвета — голубой, серо-голубой, теплый серый, приглушенная зелень. Без пестрого и крупных принтов.</p>
+    <p class="body up d1">Дальше как вам удобно: предписаний по длине и фасону у нас нет.</p>
+    <div class="swatches up d2" aria-label="Палитра">
+      <i class="sw" style="background:#EAF1F8"></i>
+      <i class="sw" style="background:#C3D7E8"></i>
+      <i class="sw" style="background:#93A9BC"></i>
+      <i class="sw" style="background:#B4C0B6"></i>
+      <i class="sw" style="background:#DCD5C9"></i>
+      <i class="sw" style="background:#6E7C8A"></i>
+    </div>
+    <p class="body up d2" style="color:var(--soft); margin-top:22px">В храме — платок и закрытые плечи. Проще всего взять шарф с собой и снять его вечером.</p>
+  </section>
+
+  <!-- ══ 21:00 ══ -->
+  <section class="scr scr--last">
+    <p class="time up">21:00</p>
+    <h2 class="what up d1">Расходимся</h2>
+  </section>
+
+  <!-- ══ Дальше ══ -->
+  <div class="flow">
+
+    <section class="sec up" id="rsvp">
+      <h2>Ответьте до 25 сентября</h2>
+      <p class="body">Двадцать девятого мы называем площадке финальное число гостей — дальше поменять уже нельзя.</p>
+
+      <form id="form" novalidate style="margin-top:28px">
+
+        <div class="field">
+          <label class="lab" for="fName">Кто отвечает</label>
+          <input class="fld" id="fName" name="name" autocomplete="name" placeholder="Имя и фамилия" required>
+        </div>
+
+        <div class="field">
+          <span class="lab">На что придете?</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="going" value="both" required><span>И на венчание, и на вечер</span></label>
+            <label class="opt"><input type="radio" name="going" value="church"><span>Только на венчание</span></label>
+            <label class="opt"><input type="radio" name="going" value="party"><span>Только на вечер</span></label>
+            <label class="opt"><input type="radio" name="going" value="maybe"><span>Пока не решили</span></label>
+            <label class="opt"><input type="radio" name="going" value="no"><span>Не сможем прийти</span></label>
+          </div>
+        </div>
+
+        <div class="field hide" id="fCountBox">
+          <span class="lab" id="labCount">Сколько человек</span>
+          <div class="opts count" id="countOpts"></div>
+        </div>
+
+        <div class="field hide" id="fWhoBox">
+          <span class="lab" id="labWho">Кто именно?</span>
+          <div class="opts" id="whoOpts"></div>
+          <input class="fld hide" id="fWhoText" placeholder="Напишите, кто будет" style="margin-top:9px">
+        </div>
+
+        <div class="field hide" id="fBusBox">
+          <span class="lab">Поедете кататься по городу?</span>
+          <div class="opts opts--row">
+            <label class="opt"><input type="radio" name="bus" value="yes"><span>Да</span></label>
+            <label class="opt"><input type="radio" name="bus" value="no"><span>Нет</span></label>
+          </div>
+        </div>
+
+        <div class="field hide" id="fNoteBox">
+          <label class="lab" for="fNote">Аллергии или что-нибудь еще</label>
+          <input class="fld" id="fNote" name="note" placeholder="Если ничего — оставьте пустым">
+        </div>
+
+        <button class="go" type="submit" id="btn">Отправить</button>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="chat">
+        <p class="body">Все вопросы — в свадебную беседу. За неделю до одиннадцатого туда добавится ведущий.</p>
+        <a class="chat__b" href="https://t.me/+T1qgn7h7g0gyNmIy" target="_blank" rel="noopener">Открыть беседу в телеграме</a>
+      </div>
+    </section>
+
+    <section class="sec up">
+      <h2>Про подарки</h2>
+      <p class="body">Самое дорогое для нас — что вы приедете и проведете с нами весь этот день.
+         А если захочется добавить к этому подарок, мы будем рады конверту.</p>
+    </section>
+
+    <section class="sec up">
+      <h2>Если что-то непонятно</h2>
+      <p class="body">Одиннадцатого мы будем недоступны, так что все вопросы этого дня — Машиной маме, Александре Александровне: <a href="tel:+79117545471">+7 911 754-54-71</a>.</p>
+    </section>
+
+    <p class="foot">До встречи 11.10.2026</p>
+  </div>
+</div>
+
+<script>
+// ═══ Настройки ═══════════════════════════════════════════════════════════
+const CONFIG = {
+  rsvpEndpoint: "https://wedding-rsvp.sashaandmasha.workers.dev",
+  fallbackTelegram: "⟨ваш_телеграм⟩",
+  defaultSeats: 2
+};
+// ═════════════════════════════════════════════════════════════════════════
+
+const $ = s => document.querySelector(s);
+const qs = new URLSearchParams(location.search);
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ═══ Небо ═══ */
+const SKY = [
+  { at:0.00, bg:[255,255,255], glow:.26 },
+  { at:0.10, bg:[243,249,254], glow:.38 },
+  { at:0.26, bg:[224,238,249], glow:.40 },
+  { at:0.48, bg:[208,227,244], glow:.34 },
+  { at:0.74, bg:[195,216,236], glow:.28 },
+  { at:1.00, bg:[184,208,230], glow:.24 }
+];
+
+const lerp = (a,b,k) => a + (b-a)*k;
+const rgb  = c => `rgb(${c[0]|0}, ${c[1]|0}, ${c[2]|0})`;
+const mix  = (a,b,k) => [lerp(a[0],b[0],k), lerp(a[1],b[1],k), lerp(a[2],b[2],k)];
+
+const root = document.documentElement, glow = $("#glow"), themeMeta = $("#themeColor");
+
+function paint(){
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const p = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+
+  let i = 0;
+  while (i < SKY.length - 2 && p > SKY[i+1].at) i++;
+  const a = SKY[i], b = SKY[i+1];
+  const k = (p - a.at) / (b.at - a.at || 1);
+  const bg = mix(a.bg, b.bg, k);
+
+  const fg = [20,26,32], sf = [58,70,82], ac = [39,98,188], on = [255,255,255];
+
+  root.style.setProperty("--bg", rgb(bg));
+  root.style.setProperty("--fg", rgb(fg));
+  root.style.setProperty("--fg-rgb", `${fg[0]|0},${fg[1]|0},${fg[2]|0}`);
+  root.style.setProperty("--soft", rgb(sf));
+  root.style.setProperty("--accent", rgb(ac));
+  root.style.setProperty("--on-accent", rgb(on));
+  root.style.setProperty("--hair", `rgba(${fg[0]|0},${fg[1]|0},${fg[2]|0},.2)`);
+  themeMeta.setAttribute("content", rgb(bg));
+
+  if (!reduced) {
+    glow.style.opacity = lerp(a.glow, b.glow, k) / .34;
+    glow.style.transform = `translate(-50%, ${-46 + p * 62}%)`;
+  }
+}
+
+let ticking = false;
+addEventListener("scroll", () => {
+  if (!ticking) { ticking = true; requestAnimationFrame(() => { paint(); ticking = false; }); }
+}, { passive:true });
+addEventListener("resize", paint, { passive:true });
+paint();
+
+/* ═══ Появление ═══ */
+if (!reduced) {
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { rootMargin:"0px 0px -12% 0px", threshold:.08 });
+  document.querySelectorAll(".up").forEach(el => io.observe(el));
+} else {
+  document.querySelectorAll(".up").forEach(el => el.classList.add("in"));
+}
+
+/* ═══ Персональная ссылка ═══
+   Имя и число человек известны заранее — анкета их показывает, а не
+   спрашивает. Если в списке есть отдельные имена, то при неполном
+   составе можно уточнить, кто именно будет. */
+let guest = { token: qs.get("g") || "", name:"", seats: CONFIG.defaultSeats, people:[], known:false };
+
+function peopleWord(n){
+  const t = n % 10, h = n % 100;
+  if (t === 1 && h !== 11) return "человек";
+  if (t >= 2 && t <= 4 && (h < 12 || h > 14)) return "человека";
+  return "человек";
+}
+
+async function personalize(){
+  if (qs.get("n")) {
+    guest.name  = qs.get("n");
+    guest.seats = parseInt(qs.get("s"), 10) || CONFIG.defaultSeats;
+    guest.people = (qs.get("p") || "").split(",").map(x => x.trim()).filter(Boolean);
+    guest.known = true;
+  } else if (guest.token) {
+    try {
+      const r = await fetch("guests.json", { cache:"no-store" });
+      const g = (await r.json())[guest.token];
+      if (g) {
+        guest.name = g.name;
+        guest.seats = g.seats || CONFIG.defaultSeats;
+        guest.people = Array.isArray(g.people) ? g.people : [];
+        guest.known = true;
+      }
+    } catch(e){ /* файла нет — гость впишет имя сам */ }
+  }
+
+  $("#who").textContent = guest.known ? guest.name + " — приглашение для вас" : "Приглашение";
+  if (guest.known) $("#fName").value = guest.name;
+
+  // Кнопки количества: сразу выбрано то, на сколько человек звали
+  const box = $("#countOpts");
+  box.innerHTML = "";
+  for (let i = 1; i <= Math.max(1, guest.seats); i++) {
+    const l = document.createElement("label");
+    l.className = "opt";
+    l.innerHTML = '<input type="radio" name="seats" value="' + i + '"' +
+                  (i === guest.seats ? " checked" : "") + '><span>' + i + "</span>";
+    box.appendChild(l);
+  }
+
+  // Галочки «кто именно» — только если в списке есть отдельные имена
+  const who = $("#whoOpts");
+  who.innerHTML = "";
+  guest.people.forEach((nm, i) => {
+    const l = document.createElement("label");
+    l.className = "opt";
+    l.innerHTML = '<input type="checkbox" name="who" value="' + nm + '"><span>' + nm + "</span>";
+    who.appendChild(l);
+  });
+  document.querySelectorAll('input[name="who"]').forEach(c => c.addEventListener("change", limitWho));
+}
+
+/* Нельзя отметить больше людей, чем указано в ответе про количество */
+function chosenCount(){
+  const r = document.querySelector('input[name="seats"]:checked');
+  return r ? Number(r.value) : guest.seats;
+}
+function limitWho(){
+  const boxes = [...document.querySelectorAll('input[name="who"]')];
+  const need = chosenCount();
+  const on = boxes.filter(b => b.checked);
+  boxes.forEach(b => { b.disabled = !b.checked && on.length >= need; });
+  $("#labWho").textContent = on.length === need
+    ? "Кто именно?"
+    : "Кто именно? Отметьте " + need;
+}
+
+/* ═══ Что показывать ═══ */
+function sync(){
+  const v = (document.querySelector('input[name="going"]:checked') || {}).value;
+  const coming = v === "both" || v === "church" || v === "party";
+
+  // Не придут — все уточнения убираем, остается только отправить
+  $("#fCountBox").classList.toggle("hide", !coming || guest.seats <= 1);
+  $("#fBusBox").classList.toggle("hide", v !== "both");
+  $("#fNoteBox").classList.toggle("hide", !(v === "both" || v === "party"));
+
+  const partial = coming && guest.seats > 1 && chosenCount() < guest.seats;
+  $("#fWhoBox").classList.toggle("hide", !partial);
+  if (partial) {
+    const named = guest.people.length >= guest.seats;
+    $("#whoOpts").classList.toggle("hide", !named);
+    $("#fWhoText").classList.toggle("hide", named);
+    if (named) limitWho();
+  }
+}
+document.querySelectorAll('input[name="going"]').forEach(r => r.addEventListener("change", sync));
+document.addEventListener("change", e => { if (e.target.name === "seats") sync(); });
+
+/* ═══ Отправка ═══ */
+const form = $("#form"), msg = $("#msg"), btn = $("#btn");
+const GOING = { both:"венчание и вечер", church:"только венчание", party:"только вечер",
+                maybe:"пока не решили", no:"не смогут" };
+
+function payload(){
+  const fd = new FormData(form);
+  const v = fd.get("going");
+  const coming = v === "both" || v === "church" || v === "party";
+  const seats = coming ? Number(fd.get("seats") || guest.seats || 1) : 0;
+
+  let who = "";
+  if (coming && guest.seats > 1 && seats < guest.seats) {
+    const picked = [...document.querySelectorAll('input[name="who"]:checked')].map(c => c.value);
+    who = picked.length ? picked.join(", ") : $("#fWhoText").value.trim();
+  }
+
+  return {
+    token: guest.token,
+    name:  ($("#fName").value || "").trim(),
+    going: v,
+    goingText: GOING[v] || "",
+    seats,
+    who,
+    bus:  v === "both" ? (fd.get("bus") || "") : "",
+    note: (v === "both" || v === "party") ? (fd.get("note") || "").trim() : "",
+    sentAt: new Date().toISOString()
+  };
+}
+
+function asText(d){
+  return [
+    "Анкета · " + (d.name || "без имени") + (d.token ? " [" + d.token + "]" : ""),
+    "Ответ: " + d.goingText + (d.seats ? ", " + d.seats + " " + peopleWord(d.seats) : ""),
+    d.who ? "Будут: " + d.who : "",
+    d.bus ? "Автобус: " + (d.bus === "yes" ? "да" : "нет") : "",
+    d.note ? "Заметка: " + d.note : ""
+  ].filter(Boolean).join("\n");
+}
+
+// Открыто файлом с диска или с локального сервера?
+function local(){
+  return location.protocol === "file:" ||
+         ["localhost","127.0.0.1",""].includes(location.hostname);
+}
+
+function done(d){
+  const text =
+    d.going === "no"    ? "Спасибо, что сообщили." :
+    d.going === "maybe" ? "Хорошо, ждем. Ответьте, пожалуйста, до 25 сентября — тогда мы успеем всех посчитать." :
+                          "Записали. Очень ждем вас одиннадцатого.";
+  form.innerHTML = '<p class="body">' + text + "</p>";
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  msg.className = "msg";
+  const d = payload();
+
+  if (!d.name)  { msg.textContent = "Напишите, пожалуйста, имя."; msg.className = "msg msg--err"; return; }
+  if (!d.going) { msg.textContent = "Отметьте, придете ли.";      msg.className = "msg msg--err"; return; }
+
+  btn.disabled = true;
+  msg.textContent = "Отправляем…";
+
+  if (!CONFIG.rsvpEndpoint) {
+    open("https://t.me/" + CONFIG.fallbackTelegram + "?text=" + encodeURIComponent(asText(d)), "_blank", "noopener");
+    msg.textContent = "Осталось нажать «отправить» в телеграме.";
+    btn.disabled = false;
+    return;
+  }
+
+  try {
+    const r = await fetch(CONFIG.rsvpEndpoint, {
+      method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(d)
+    });
+    if (!r.ok) throw new Error(r.status);
+    msg.textContent = "";
+    done(d);
+  } catch(err) {
+    msg.className = "msg msg--err";
+    // Локально анкета не отправится никогда: воркер принимает запросы
+    // только с адреса сайта. Это не поломка, но выглядит как поломка,
+    // поэтому говорим прямо.
+    msg.innerHTML = local()
+      ? "Страница открыта локально, поэтому анкета не отправляется — так и задумано. Проверяйте на опубликованном сайте."
+      : 'Не отправилось. Напишите нам в беседу: <a href="https://t.me/+T1qgn7h7g0gyNmIy" target="_blank" rel="noopener">свадебные вопросы</a>';
+    msg.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block:"center" });
+    btn.disabled = false;
+  }
+});
+
+personalize().then(() => { sync(); paint(); });
+</script>
+</body>
+</html>
