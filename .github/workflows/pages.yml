@@ -1,0 +1,38 @@
+
+name: Deploy site
+ 
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+ 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+ 
+# Если два пуша подряд — доезжает последний, предыдущий отменяется
+concurrency:
+  group: pages
+  cancel-in-progress: true
+ 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+ 
+      - uses: actions/configure-pages@v5
+ 
+      # Публикуется только site/. worker/ и card/ остаются в репозитории,
+      # но в интернет не уезжают.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+ 
+      - id: deployment
+        uses: actions/deploy-pages@v4
+ 
