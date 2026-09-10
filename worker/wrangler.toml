@@ -1,0 +1,7 @@
+name = "wedding-rsvp"
+main = "rsvp-worker.js"
+compatibility_date = "2026-01-01"
+
+# Секреты не пишутся сюда — они задаются командой:
+#   wrangler secret put BOT_TOKEN
+#   wrangler secret put CHAT_ID
