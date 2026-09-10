@@ -62,7 +62,6 @@ export default {
       d.going === "maybe" ? "Пока не решили" :
       "Придут: " + clip(d.goingText, 60) + ", " + (Number(d.seats) || 1),
       d.who ? "Кто: " + clip(d.who, 200) : "",
-      d.bus ? "Автобус: " + (d.bus === "yes" ? "да" : "нет") : "",
       d.note ? "Заметка: " + clip(d.note, 600) : ""
     ].filter(Boolean);
 
