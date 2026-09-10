@@ -162,8 +162,6 @@ a{
 .more dt:first-child{margin-top:0}
 .more dd{margin:0; font-size:.95em; line-height:1.55}
 
-.bus{margin:22px 0 0; padding:18px 0 0; max-width:32em; border-top:1.5px solid var(--hair)}
-.bus__h{font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--soft); margin:0 0 8px}
 
 .swatches{display:flex; gap:10px; margin:24px 0 0; flex-wrap:wrap}
 .sw{width:46px; height:46px; border-radius:50%; box-shadow:inset 0 0 0 1.5px var(--hair)}
@@ -301,13 +299,8 @@ a{
   <section class="scr">
     <p class="time up">13:00</p>
     <h2 class="what up d1">Два часа наши</h2>
-    <p class="body up d1">До вечера есть время. Можно разъехаться по своим делам и встретиться уже на Восстания — а можно поехать с нами смотреть на город.</p>
-
-    <div class="bus up d2">
-      <p class="bus__h">Автобус</p>
-      <p class="body">Мы берем автобус и катаемся по городу — без программы, просто вместе. Он же довозит до места вечера, так что добираться потом не надо.</p>
-      <p class="body" style="color:var(--soft)">Отметьте в анкете, если хотите поехать.</p>
-    </div>
+    <p class="body up d1">Между храмом и вечером есть время. Можно разъехаться по своим делам,
+       перекусить, отдохнуть — и встретиться уже на Восстания.</p>
   </section>
 
   <!-- ══ 15:00 ══ -->
@@ -341,7 +334,7 @@ a{
   <!-- ══ 21:00 ══ -->
   <section class="scr scr--last">
     <p class="time up">21:00</p>
-    <h2 class="what up d1">Окончание вечера</h2>
+    <h2 class="what up d1">Расходимся</h2>
   </section>
 
   <!-- ══ Дальше ══ -->
@@ -378,14 +371,6 @@ a{
           <span class="lab" id="labWho">Кто именно?</span>
           <div class="opts" id="whoOpts"></div>
           <input class="fld hide" id="fWhoText" placeholder="Напишите, кто будет" style="margin-top:9px">
-        </div>
-
-        <div class="field hide" id="fBusBox">
-          <span class="lab">Поедете кататься по городу?</span>
-          <div class="opts opts--row">
-            <label class="opt"><input type="radio" name="bus" value="yes"><span>Да</span></label>
-            <label class="opt"><input type="radio" name="bus" value="no"><span>Нет</span></label>
-          </div>
         </div>
 
         <div class="field hide" id="fNoteBox">
@@ -571,7 +556,6 @@ function sync(){
 
   // Не придут — все уточнения убираем, остается только отправить
   $("#fCountBox").classList.toggle("hide", !coming || guest.seats <= 1);
-  $("#fBusBox").classList.toggle("hide", v !== "both");
   $("#fNoteBox").classList.toggle("hide", !(v === "both" || v === "party"));
 
   const partial = coming && guest.seats > 1 && chosenCount() < guest.seats;
@@ -610,7 +594,6 @@ function payload(){
     goingText: GOING[v] || "",
     seats,
     who,
-    bus:  v === "both" ? (fd.get("bus") || "") : "",
     note: (v === "both" || v === "party") ? (fd.get("note") || "").trim() : "",
     sentAt: new Date().toISOString()
   };
@@ -621,7 +604,6 @@ function asText(d){
     "Анкета · " + (d.name || "без имени") + (d.token ? " [" + d.token + "]" : ""),
     "Ответ: " + d.goingText + (d.seats ? ", " + d.seats + " " + peopleWord(d.seats) : ""),
     d.who ? "Будут: " + d.who : "",
-    d.bus ? "Автобус: " + (d.bus === "yes" ? "да" : "нет") : "",
     d.note ? "Заметка: " + d.note : ""
   ].filter(Boolean).join("\n");
 }
