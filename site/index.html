@@ -234,10 +234,10 @@ a{
   font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
 }
 
-.up{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s cubic-bezier(.16,.8,.3,1)}
+.up{opacity:0; transform:translateY(18px); transition:opacity .5s ease, transform .5s cubic-bezier(.16,.8,.3,1)}
 .up.in{opacity:1; transform:none}
-.up.d1{transition-delay:.07s}
-.up.d2{transition-delay:.14s}
+.up.d1{transition-delay:.05s}
+.up.d2{transition-delay:.1s}
 .hide{display:none !important}
 
 @media (prefers-reduced-motion: reduce){
@@ -306,19 +306,31 @@ a{
   <!-- ══ 15:00 ══ -->
   <section class="scr">
     <p class="time up">15:00</p>
+    <h2 class="what up d1">Фуршет</h2>
+    <p class="addr up d1">
+      <b>«Амулет», Классический зал</b>
+      <span>Улица Восстания, 35 — вход на углу дома</span>
+    </p>
+    <p class="up d1"><a class="maplink" href="https://yandex.ru/maps/-/CThznFn4" target="_blank" rel="noopener">Открыть карту</a></p>
+    <p class="body up d2">Собираемся в зале: закуски, напитки и спокойные разговоры до начала банкета.</p>
+  </section>
+
+  <!-- ══ 15:00 · фото ══ -->
+  <section class="scr">
+    <p class="time up">15:00</p>
     <h2 class="what up d1">Фотографии</h2>
     <p class="addr up d1">
       <b>Академия Штиглица</b>
       <span>Соляной переулок, 13</span>
     </p>
     <p class="up d1"><a class="maplink" href="https://yandex.ru/maps/?text=%D0%90%D0%BA%D0%B0%D0%B4%D0%B5%D0%BC%D0%B8%D1%8F%20%D0%A8%D1%82%D0%B8%D0%B3%D0%BB%D0%B8%D1%86%D0%B0%2C%20%D0%A1%D0%BE%D0%BB%D1%8F%D0%BD%D0%BE%D0%B9%20%D0%BF%D0%B5%D1%80%D0%B5%D1%83%D0%BB%D0%BE%D0%BA%2C%2013" target="_blank" rel="noopener">Открыть карту</a></p>
-    <p class="body up d2">Будет много беготни и дурачества на камеру, так что зовем в первую очередь молодежь. После съемки на такси едем в банкетный зал. Кому хочется спокойнее, приезжайте сразу к 15:30 на Восстания.</p>
+    <p class="body up d2">Одновременно с фуршетом фотографируемся. Будет много беготни и дурачества на камеру, так что зовем в первую очередь молодежь. После съемки на такси едем к остальным.</p>
   </section>
 
-  <!-- ══ 15:30 ══ -->
+  <!-- ══ 16:00 ══ -->
   <section class="scr">
-    <p class="time up">15:30</p>
-    <h2 class="what up d1">Вечер</h2>
+    <p class="time up">16:00</p>
+    <h2 class="what up d1">Банкет</h2>
     <p class="addr up d1">
       <b>«Амулет», Классический зал</b>
       <span>Улица Восстания, 35 — вход на углу дома</span>
@@ -345,7 +357,7 @@ a{
 
   <!-- ══ 21:00 ══ -->
   <section class="scr scr--last">
-    <p class="time up">21:30</p>
+    <p class="time up">21:00</p>
     <h2 class="what up d1">Окончание мероприятия</h2>
   </section>
 
@@ -482,7 +494,7 @@ paint();
 if (!reduced) {
   const io = new IntersectionObserver((es) => {
     es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-  }, { rootMargin:"0px 0px -12% 0px", threshold:.08 });
+  }, { rootMargin:"0px 0px -2% 0px", threshold:0 });
   document.querySelectorAll(".up").forEach(el => io.observe(el));
 } else {
   document.querySelectorAll(".up").forEach(el => el.classList.add("in"));
